@@ -1,0 +1,19 @@
+{
+  "name": "ergo",
+  "version": "1.0.0",
+  "description": "basic ergo wallet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fleet-sdk/core": "^0.10.0",
+    "@fleet-sdk/crypto": "^0.10.0",
+    "@fleet-sdk/wallet": "^0.10.0",
+    "axios": "^1.10.0",
+    "bip39": "^3.1.0",
+    "ergo-lib-wasm-nodejs": "^0.28.0"
+  }
+}

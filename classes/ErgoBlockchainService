@@ -1,0 +1,63 @@
+const axios = require('axios');
+
+class ErgoBlockchainService {
+    constructor() {
+        this.explorerUrl = 'https://api.ergoplatform.com';
+    }
+
+    async getBalance(address) {
+        try {
+            console.log(`Fetching balance for: ${address}`);
+            const response = await axios.get(
+                `${this.explorerUrl}/api/v1/addresses/${address}/balance/confirmed`
+            );
+            return {
+                nanoErgs: response.data.nanoErgs || 0,
+                ergs: (response.data.nanoErgs || 0) / 1000000000,
+                tokens: response.data.tokens || []
+            };
+        } catch (error) {
+            if (error.response?.status === 404) {
+                // 404 is normal for new addresses that haven't been used
+                console.log('✓ Address is valid but has no transaction history (balance = 0)');
+                return { nanoErgs: 0, ergs: 0, tokens: [] };
+            }
+            console.error('Error fetching balance:', error.response?.status, error.response?.statusText);
+            return { nanoErgs: 0, ergs: 0, tokens: [], error: error.response?.status };
+        }
+    }
+
+    async getTransactionHistory(address, limit = 50, offset = 0) {
+        try {
+            const response = await axios.get(
+                `${this.explorerUrl}/api/v1/addresses/${address}/transactions`,
+                {
+                    params: { limit, offset }
+                }
+            );
+            
+            return response.data.items || [];
+        } catch (error) {
+            if (error.response?.status === 404) {
+                console.log('No transaction history found (new address)');
+                return [];
+            }
+            console.error('Error fetching transaction history:', error);
+            return [];
+        }
+    }
+
+    async getAddressInfo(address) {
+        try {
+            const response = await axios.get(`${this.explorerUrl}/api/v1/addresses/${address}`);
+            return response.data;
+        } catch (error) {
+            if (error.response?.status === 404) {
+                return { exists: false, message: 'Address has no transaction history' };
+            }
+            throw error;
+        }
+    }
+}
+
+module.exports = ErgoBlockchainService;
