@@ -1,5 +1,6 @@
 const ergoLib = require('ergo-lib-wasm-nodejs');
-
+// run with: node debug-ergo-lib.js
+// index.js can also be used but can it remain with vue3?
 console.log('=== Debugging ergo-lib-wasm-nodejs API ===');
 
 console.log('\nAvailable ergoLib properties:');

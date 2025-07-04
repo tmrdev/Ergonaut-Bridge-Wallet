@@ -1,3 +1,8 @@
+/*
+ * Adding vue3 and vite for UI, can this index.js in project root remain?
+ * currently it helps test Ergo Wallet Creation
+ */
+
 const bip39 = require('bip39');
 // Generate a 12-word mnemonic
 const mnemonic = bip39.generateMnemonic(128); // 128 bits = 12 words
