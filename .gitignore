@@ -85,7 +85,8 @@ web_modules/
 
 # Next.js build output
 .next
-out
+# boilerplate for vue3 uses out
+# out
 
 # Nuxt.js build / generate output
 .nuxt
